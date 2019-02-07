@@ -1,12 +1,15 @@
 import logging
 import logging.handlers
 
+from wsgiref.simple_server import make_server
+
+
 # Create logger
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-# Handler
-LOG_FILE = '/var/log/uwsgi/sample-app.log' # /var/log/uwsgi is the default log path for Docker preconfigured python containers
+# Handler 
+LOG_FILE = '/opt/python/log/sample-app.log'
 handler = logging.handlers.RotatingFileHandler(LOG_FILE, maxBytes=1048576, backupCount=5)
 handler.setLevel(logging.INFO)
 
@@ -25,8 +28,11 @@ welcome = """
 <head>
   <!--
     Copyright 2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
     Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
+
         http://aws.Amazon/apache2.0/
+
     or in the "license" file accompanying this file. This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
   -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -62,6 +68,7 @@ welcome = """
     right: 50%;
     bottom: 0px;
     left: 0px;
+
     text-align: right;
     padding-top: 11em;
     background-color: #1BA86D;
@@ -78,8 +85,10 @@ welcome = """
     right: 0px;
     bottom: 0px;
     left: 50%;
+
     background-color: #E0E0E0;
   }
+
   h1 {
     font-size: 500%;
     font-weight: normal;
@@ -100,26 +109,21 @@ welcome = """
   </style>
 </head>
 <body id="sample">
-<div class="textColumn">
-	<h2>What the heck is that?</h2>
-	<form action="upload.php" enctype="multipart/form-data" method="post">
-		<h3>Select image to upload:</h3>
-		<h3><input id="fileToUpload" name="fileToUpload" type="file" /></h3>
-		<h3><input name="submit" type="submit" value="Upload Image" /></h3>
-	</form>
-</div>
-  <div class="linksColumn">
+  <div class="textColumn">
+    <h1>Congratulations</h1>
+    <p>Your first AWS Elastic Beanstalk Python Application is now running on your own dedicated environment in the AWS Cloud</p>
+  </div>
+  
+  <div class="linksColumn"> 
     <h2>What's Next?</h2>
-    <p>Hello World. It works!!!!</p>
     <ul>
-      <li><a href="http://aws.amazon.com/elasticbeanstalk/ug/">Learn how to build, deploy and manage your own applications using AWS Elastic Beanstalk</a></li>
-      <li><a href="http://aws.amazon.com/elasticbeanstalk/concepts/">AWS Elastic Beanstalk concepts</a></li>
-      <li><a href="http://aws.amazon.com/elasticbeanstalk/deployment/">Learn how to create new application versions</a></li>
-      <li><a href="http://aws.amazon.com/elasticbeanstalk/environments/">Learn how to manage your application environments</a></li>
-    </ul>
-    <h2>Python 3 Samples</h2>
-    <ul>
-      <li><a href="https://github.com/awslabs/eb-py-flask-signup/tree/python3">A sample application using Flask and Bootstrap</a></li>
+    <li><a href="http://docs.amazonwebservices.com/elasticbeanstalk/latest/dg/">AWS Elastic Beanstalk overview</a></li>
+    <li><a href="http://docs.amazonwebservices.com/elasticbeanstalk/latest/dg/index.html?concepts.html">AWS Elastic Beanstalk concepts</a></li>
+    <li><a href="http://docs.amazonwebservices.com/elasticbeanstalk/latest/dg/create_deploy_Python_django.html">Deploy a Django Application to AWS Elastic Beanstalk</a></li>
+    <li><a href="http://docs.amazonwebservices.com/elasticbeanstalk/latest/dg/create_deploy_Python_flask.html">Deploy a Flask Application to AWS Elastic Beanstalk</a></li>
+    <li><a href="http://docs.amazonwebservices.com/elasticbeanstalk/latest/dg/create_deploy_Python_custom_container.html">Customizing and Configuring a Python Container</a></li>
+    <li><a href="http://docs.amazonwebservices.com/elasticbeanstalk/latest/dg/using-features.loggingS3.title.html">Working with Logs</a></li>
+
     </ul>
   </div>
 </body>
@@ -133,7 +137,7 @@ def application(environ, start_response):
         try:
             if path == '/':
                 request_body_size = int(environ['CONTENT_LENGTH'])
-                request_body = environ['wsgi.input'].read(request_body_size)
+                request_body = environ['wsgi.input'].read(request_body_size).decode()
                 logger.info("Received message: %s" % request_body)
             elif path == '/scheduled':
                 logger.info("Received task %s scheduled at %s", environ['HTTP_X_AWS_SQSD_TASKNAME'], environ['HTTP_X_AWS_SQSD_SCHEDULED_AT'])
@@ -146,5 +150,10 @@ def application(environ, start_response):
     headers = [('Content-type', 'text/html')]
 
     start_response(status, headers)
-    return [response.encode('utf-8')]
+    return [response]
 
+
+if __name__ == '__main__':
+    httpd = make_server('', 8000, application)
+    print("Serving on port 8000...")
+    httpd.serve_forever()
