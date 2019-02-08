@@ -19,4 +19,4 @@ api.add_resource(Picture, '/picture') # Route_1
 
 if __name__ == '__main__':
 	#app.run(port='5002')
-	app.run(port='5002', host='0.0.0.0')
+	app.run(port='5002', host='52.207.248.24')
