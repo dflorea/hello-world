@@ -29,7 +29,8 @@ def ai_func():
 
     # evaluate the model
     scores = model.evaluate(X, Y)
-    s = model.metrics_names[1] + str(scores[1]*100)
+    #s = model.metrics_names[1] + str(scores[1]*100)
+    s = " simple string works "
     return s
     #print("\n%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 
