@@ -12,23 +12,23 @@ def ai_func():
 
     # train a simple AND gate
     # split into input (X) and output (Y) variables
-    #X = np.array([[1,0],[0,0],[0,1],[1,1]])
-    #Y = np.array([0,0,0,1])
+    X = np.array([[1,0],[0,0],[0,1],[1,1]])
+    Y = np.array([0,0,0,1])
 
     # create model
-    #model = Sequential()
-    #model.add(Dense(12, input_dim=2, activation='relu'))
-    #model.add(Dense(8, activation='relu'))
-    #model.add(Dense(1, activation='sigmoid'))
+    model = Sequential()
+    model.add(Dense(12, input_dim=2, activation='relu'))
+    model.add(Dense(8, activation='relu'))
+    model.add(Dense(1, activation='sigmoid'))
 
     # Compile model
-    #model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     # Fit the model
-    #model.fit(X, Y, epochs=150, batch_size=10)
+    model.fit(X, Y, epochs=150, batch_size=10)
 
     # evaluate the model
-    #scores = model.evaluate(X, Y)
+    scores = model.evaluate(X, Y)
     #s = model.metrics_names[1] + str(scores[1]*100)
     s = " simple string works "
     return s
