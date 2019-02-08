@@ -15,15 +15,15 @@ Y = np.array([0,0,0,1])
 
 # create model
 model = Sequential()
-model.add(Dense(20, input_dim=2, activation='relu'))
-model.add(Dense(8, activation='relu'))
+model.add(Dense(100, input_dim=2, activation='relu'))
+model.add(Dense(50, activation='relu'))
 model.add(Dense(1, activation='sigmoid'))
 
 # Compile model
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 # Fit the model
-model.fit(X, Y, epochs=250, batch_size=2)
+model.fit(X, Y, epochs=150, batch_size=2)
 
 # evaluate the model
 scores = model.evaluate(X, Y)
