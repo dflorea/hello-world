@@ -29,17 +29,11 @@ def ai_func():
 
     # evaluate the model
     scores = model.evaluate(X, Y)
-    #s = model.metrics_names[1] + str(scores[1]*100)
-    s = " simple string works "
-    return s
-    #print("\n%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
-
-    # evaluate the model
-    #scores = model.evaluate(X, Y)
-    #print("\n%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
+    s = model.metrics_names[1] + str(scores[1]*100)
+    print("\n%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 
     # calculate predictions
-    #predictions = model.predict(X)
-    # round predictions
-    #rounded = [round(x[0]) for x in predictions]
-    #print(rounded)
+    predictions = model.predict(X)
+    round predictions
+    rounded = [round(x[0]) for x in predictions]
+    print(rounded)
