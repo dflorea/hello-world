@@ -2,9 +2,9 @@
 # Copyright Jacob and Dan 2019
 # AI sample code
 # purpose of this code is to train a simple AND gate logic using keras
-from keras.models import Sequential
-from keras.layers import Dense
-import numpy as np
+#from keras.models import Sequential
+#from keras.layers import Dense
+#import numpy as np
 
 def ai_func():
     # init the randomizer to something
