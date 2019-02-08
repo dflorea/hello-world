@@ -25,15 +25,17 @@ def ai_func():
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     # Fit the model
-    model.fit(X, Y, epochs=150, batch_size=10)
+    print ("Now training the network to learn the AND function:")
+    model.fit(X, Y, epochs=150, batch_size=2)
 
     # evaluate the model
+    print ("General accuracy of the model:")
     scores = model.evaluate(X, Y)
-    s = model.metrics_names[1] + str(scores[1]*100)
     print("\n%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 
     # calculate predictions
     predictions = model.predict(X)
-    round predictions
-    rounded = [round(x[0]) for x in predictions]
-    print(rounded)
+    # round predictions
+    # rounded = [round(x[0]) for x in predictions]
+    print ("Inputs into the neural net after training to be an AND:\n"+ str(X))
+    print("Neural net predictions:\n"+ str(predictions))
