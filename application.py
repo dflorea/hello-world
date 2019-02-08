@@ -3,6 +3,8 @@ import logging.handlers
 
 from wsgiref.simple_server import make_server
 
+from ai import ai_func
+
 
 # Create logger
 logger = logging.getLogger(__name__)
@@ -147,7 +149,7 @@ def application(environ, start_response):
             logger.warning('Error retrieving request body for async work.')
         response = ''
     else:
-        response = welcome
+        response = welcome + " " + ai_func()
     status = '200 OK'
     headers = [('Content-type', 'text/html')]
 
