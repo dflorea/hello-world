@@ -16,7 +16,7 @@ def ai_func():
     #Y = np.array([0,0,0,1])
 
     # create model
-    #model = Sequential()
+    model = Sequential()
     #model.add(Dense(12, input_dim=2, activation='relu'))
     #model.add(Dense(8, activation='relu'))
     #model.add(Dense(1, activation='sigmoid'))
